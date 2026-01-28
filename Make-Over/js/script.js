@@ -143,7 +143,7 @@ const searchInput = document.getElementById("searchbox");
 searchInput.addEventListener("input", (e) => {
   const searchTerm = e.target.value.toLowerCase();
   const filteredProducts = products.filter((product) =>
-    product.name.toLowerCase().includes(searchTerm)
+    product.name.toLowerCase().includes(searchTerm),
   );
   addDataToHTML(filteredProducts);
 });
@@ -228,7 +228,7 @@ const cartBody = document.querySelector(".cart-body");
 
 const addToCart = (productId) => {
   let positionThisProductInCart = shoppingCart.findIndex(
-    (value) => value.productId == productId
+    (value) => value.productId == productId,
   );
   if (shoppingCart.length <= 0) {
     shoppingCart = [{ productId: productId, quantity: 1 }];
@@ -279,7 +279,7 @@ const addCartToHTML = () => {
   if (shoppingCart.length > 0) {
     shoppingCart.forEach((cart) => {
       let positionProduct = products.findIndex(
-        (value) => value.id == cart.productId
+        (value) => value.id == cart.productId,
       );
       if (positionProduct === -1) {
         console.error(`Product with ID ${cart.productId} not found`);
@@ -337,9 +337,8 @@ const addCartToHTML = () => {
       cartBody.appendChild(newCartItem);
     });
     document.getElementById("carryConunt").textContent = totalQuantity;
-    document.getElementById(
-      "cartSubtotal"
-    ).textContent = `৳. ${subtotal.toFixed(2)}`;
+    document.getElementById("cartSubtotal").textContent =
+      `৳. ${subtotal.toFixed(2)}`;
   }
 };
 
@@ -360,7 +359,7 @@ cartBody.addEventListener("click", (event) => {
 
 const changeQuantity = (productId, type) => {
   let positionItemInCart = shoppingCart.findIndex(
-    (value) => value.productId == productId
+    (value) => value.productId == productId,
   );
   if (positionItemInCart >= 0) {
     switch (type) {
@@ -388,7 +387,7 @@ cartBody.addEventListener("click", (e) => {
   if (e.target.closest(".delete-btn")) {
     let productId = e.target.closest(".cart-item").dataset.id;
     let positionItemInCart = shoppingCart.findIndex(
-      (value) => value.productId == productId
+      (value) => value.productId == productId,
     );
 
     shoppingCart.splice(positionItemInCart, 1);
@@ -473,6 +472,12 @@ function handleSwipe() {
 //   () => (autoSlide = setInterval(nextSlide, 5000))
 // );
 
+function updateWishListDisplay() {
+  const wishlistData = JSON.parse(localStorage.getItem("wishlist"));
+  const wishlistCount = document.getElementById("wishlistCount");
+  wishlistCount.textContent = wishlistData.length;
+}
+
 const initApp = async () => {
   try {
     // Fetch products from API
@@ -492,10 +497,10 @@ const initApp = async () => {
       '<div class="error-message">Unable to load products. Please try again later.</div>';
   }
 
-  if (localStorage.getItem("wishlist")) {
-    const wishlistData = JSON.parse(localStorage.getItem("wishlist"));
-    updateWishListDisplay(wishlistData);
-  }
+  // Update wishlist display
+  updateWishListDisplay();
+
+  addWishlistToHTML();
 };
 
 // Function to update cart display

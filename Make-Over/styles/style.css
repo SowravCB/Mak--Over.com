@@ -514,6 +514,33 @@ body {
     font-family: var(--font);
 }
 
+.wishlist-container .wishlist-action-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 15px;
+    box-shadow: var(--shadow-1);
+    /* background: var(--bg-sec-color); */
+}
+
+.wishlist-container .wishlist-action-btn button {
+    width: 100%;
+    padding: 15px 0;
+    background: var(--hover-bg-pri-color);
+    color: #fff;
+    font-size: clamp(12px, 1.2vw, 14px);
+    font-weight: 500;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-family: var(--font);
+    transition: background 0.3s ease;
+}
+
+.wishlist-container .wishlist-action-btn button:hover {
+    background: var(--hover-bg-sec-color);
+}
+
 /* WISHLIST STYLE END */
 
 

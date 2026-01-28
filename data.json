@@ -349,6 +349,36 @@
       "weight": "350ml",
       "status": "active",
       "createdAt": "2025-10-01"
+    },
+    {
+      "id": 12,
+      "name": "Jui Hair Care Oil",
+      "category": ["hair", "Haircare", "Kumarika"],
+      "originalprice": 320,
+      "discount": 0,
+      "image": [
+        {
+          "url": "/assets/images/jui-haircare.jpg",
+          "isMain": true
+        },
+        {
+          "url": "/assets/images/jui-haircare-1.jpg",
+          "isMain": false
+        }
+      ],
+      "description": "Jui Hair Care is light & non-sticky, a composition of 10 essential oils and 5 necessary vitamins which ensures maximum nourishment of the hair. Jui Hair Care is highly enriched in Vitamin E (1000 times more vitamin E compare to ordinary hair oils) & A, which ensures hair’s protection from the harmful UV radiation of the sun. Vitamin B increases hair growth cells assisting in new hairs to grow faster. Vitamin C reduces the presence of iron on the scalp and increases strength from the root. Vitamin F controls hair damage, cancels dryness and amplifies natural shine. Main Ingredients: Mineral Oil, Wheat Germ Oil, Dragobotania, 10 essential herbal extracts, 5 essential vitamins, perfume, oil soluble green color. Country of Origin: Bangladesh.",
+      "features": [
+        "Bluetooth 5.0",
+        "Noise Cancellation",
+        "20-hour Battery",
+        "Comfort Fit"
+      ],
+      "brands": "Jui",
+      "rating": 4.5,
+      "stock": 50,
+      "weight": "350ml",
+      "status": "active",
+      "createdAt": "2025-10-01"
     }
   ],
   "orders": [

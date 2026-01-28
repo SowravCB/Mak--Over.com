@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const product = products.find((p) => p.id == productId);
       if (product) {
         displayProductDetails(product);
+
         displayRecommendedProducts();
       } else {
         document.getElementById("productDetailContainer").innerHTML =
@@ -23,6 +24,10 @@ document.addEventListener("DOMContentLoaded", () => {
         shoppingCart = JSON.parse(localStorage.getItem("cart"));
         addCartToHTML();
       }
+
+      // ✅ Load wishlist from localStorage
+      addWishlistToHTML();
+      updateWishListDisplay();
 
       // setupCartInteractions();
     })
@@ -53,7 +58,7 @@ function displayProductDetails(product) {
                   .map(
                     (img) => `
             <img src="${img.url}" alt="${product.name}" class="thumbnail">
-          `
+          `,
                   )
                   .join("")
               : ""
@@ -70,7 +75,7 @@ function displayProductDetails(product) {
           ${
             product.discount
               ? `<span class="original-price">৳ ${product.originalprice.toFixed(
-                  2
+                  2,
                 )}</span>`
               : ""
           }
@@ -174,11 +179,10 @@ function displayProductDetails(product) {
   });
 }
 
-const recommendedProductsContainer = document.getElementById(
-  "recommendedProducts"
-);
-
 // ✅ Show recommended products
+const recommendedProductsContainer = document.getElementById(
+  "recommendedProducts",
+);
 function displayRecommendedProducts() {
   const recommendedProducts = products
     .sort(() => Math.random() - 0.5) // random shuffle
@@ -225,6 +229,7 @@ function displayRecommendedProducts() {
     });
   });
 }
+
 // ✅ Add product to wishlist
 function addToWishlist(productId) {
   if (!wishlist.find((id) => id == productId)) {
@@ -251,6 +256,7 @@ const addWishlistToHTML = () => {
   wishlistBody.innerHTML = "";
   wishlist.forEach((id) => {
     const product = products.find((p) => p.id == id);
+
     let wishlistProductName =
       product.name.length > 45
         ? product.name.slice(0, 45) + "..."
@@ -263,6 +269,8 @@ const addWishlistToHTML = () => {
     const mainImage = Array.isArray(product.image)
       ? product.image.find((img) => img.isMain)?.url || product.image[0]
       : product.image;
+
+    totalWishlistItems = wishlist.length;
     if (product) {
       wishlistBody.innerHTML += `
         <div class="wishlist-item">
@@ -320,6 +328,7 @@ const addWishlistToHTML = () => {
       addWishlistToMemory();
     }
   });
+  document.getElementById("wishlistCount").textContent = wishlist.length;
 };
 
 // Handle profile icon click
@@ -339,7 +348,7 @@ if (detailProfileIcon) {
 
 // Update bottom bar profile link
 const detailBottomBarProfileLink = document.querySelector(
-  "#bottomBar a:last-child"
+  "#bottomBar a:last-child",
 );
 if (detailBottomBarProfileLink) {
   detailBottomBarProfileLink.addEventListener("click", (e) => {

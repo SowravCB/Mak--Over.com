@@ -112,7 +112,7 @@ function setupPage(elements, userData) {
 
     // Set up navigation
     const sidebarButtons = document.querySelectorAll(
-      ".sidebar-menu button[data-section]"
+      ".sidebar-menu button[data-section]",
     );
     const sections = document.querySelectorAll(".account-section");
     setupNavigation(sidebarButtons, sections);
@@ -135,7 +135,7 @@ function setupPage(elements, userData) {
       notificationSettings,
       userData.id,
       userData.preferences || {},
-      true
+      true,
     );
 
     // Set up logout
@@ -299,7 +299,7 @@ async function saveProfileChanges(elements, userData) {
 // PASSWORD CHANGE
 // ============================================
 
-function setupPasswordChange(form, elements) {
+function setupPasswordChange(form, _elements) {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -336,7 +336,7 @@ function setupPasswordChange(form, elements) {
       console.error("Error updating password:", error);
       showMessage(
         "Error updating password. Please check your current password.",
-        "error"
+        "error",
       );
     }
   });
@@ -350,7 +350,7 @@ function setupNotifications(
   settings,
   userId,
   initialPreferences = {},
-  isOwner = true
+  isOwner = true,
 ) {
   // Get or initialize preferences
   const cached = localStorage.getItem(`preferences_${userId}`);
@@ -370,7 +370,7 @@ function setupNotifications(
 
       if (isOwner) {
         checkbox.addEventListener("change", () =>
-          handlePreferenceChange(settings, userId)
+          handlePreferenceChange(settings, userId),
         );
       } else {
         checkbox.disabled = true;
@@ -425,7 +425,7 @@ function setupLogout(logoutBtn) {
   logoutBtn.addEventListener("click", () => {
     // Clear localStorage
     const currentUser = JSON.parse(
-      localStorage.getItem("loggedInUser") || "{}"
+      localStorage.getItem("loggedInUser") || "{}",
     );
     const userId = currentUser.id;
 
@@ -464,7 +464,17 @@ async function loadOrders(userId = null) {
       return;
     }
 
-    const ordersHTML = orders
+    // Filter orders where customerId matches userId
+    const filteredOrders = orders.filter((order) => {
+      return !userId || order.customerId === userId;
+    });
+
+    if (filteredOrders.length === 0) {
+      ordersList.innerHTML = '<div class="no-orders">No orders found.</div>';
+      return;
+    }
+
+    const ordersHTML = filteredOrders
       .sort((a, b) => {
         const dateA = new Date(b.orderDate || b.createdAt);
         const dateB = new Date(a.orderDate || a.createdAt);
@@ -676,7 +686,7 @@ function renderWishlistItem(item) {
 
       // Set up navigation
       const sidebarButtons = document.querySelectorAll(
-        ".sidebar-menu button[data-section]"
+        ".sidebar-menu button[data-section]",
       );
       const sections = document.querySelectorAll(".account-section");
       setupNavigation(sidebarButtons, sections);
@@ -699,7 +709,7 @@ function renderWishlistItem(item) {
         notificationSettings,
         userData.id,
         userData.preferences || {},
-        true
+        true,
       );
 
       // Set up logout
@@ -863,7 +873,7 @@ function renderWishlistItem(item) {
   // PASSWORD CHANGE
   // ============================================
 
-  function setupPasswordChange(form, elements) {
+  function setupPasswordChange(form, _elements) {
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
@@ -901,7 +911,7 @@ function renderWishlistItem(item) {
         console.error("Error updating password:", error);
         showMessage(
           "Error updating password. Please check your current password.",
-          "error"
+          "error",
         );
       }
     });
@@ -915,7 +925,7 @@ function renderWishlistItem(item) {
     settings,
     userId,
     initialPreferences = {},
-    isOwner = true
+    isOwner = true,
   ) {
     // Get or initialize preferences
     const cached = localStorage.getItem(`preferences_${userId}`);
@@ -935,7 +945,7 @@ function renderWishlistItem(item) {
 
         if (isOwner) {
           checkbox.addEventListener("change", () =>
-            handlePreferenceChange(settings, userId)
+            handlePreferenceChange(settings, userId),
           );
         } else {
           checkbox.disabled = true;
@@ -958,7 +968,7 @@ function renderWishlistItem(item) {
       await ApiService.updateUserProfile({ preferences });
       localStorage.setItem(
         `preferences_${userId}`,
-        JSON.stringify(preferences)
+        JSON.stringify(preferences),
       );
       showMessage("Preferences saved!", "success");
     } catch (error) {
@@ -993,7 +1003,7 @@ function renderWishlistItem(item) {
     logoutBtn.addEventListener("click", () => {
       // Clear localStorage
       const currentUser = JSON.parse(
-        localStorage.getItem("loggedInUser") || "{}"
+        localStorage.getItem("loggedInUser") || "{}",
       );
       const userId = currentUser.id;
 
@@ -1221,7 +1231,7 @@ function renderWishlistItem(item) {
         notificationSettings,
         otherUser.id,
         otherUser.preferences || {},
-        false
+        false,
       );
 
       // Load other user's data
@@ -1399,7 +1409,7 @@ async function attemptLoadPreferredUser(elements, currentUser) {
       notificationSettings,
       otherUser.id,
       otherUser.preferences || {},
-      false
+      false,
     );
 
     // Load other user's data
